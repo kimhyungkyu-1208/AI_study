@@ -88,16 +88,39 @@ labels_map = {
     8: "Bag",
     9: "Ankle Boot",
 }
-figure = plt.figure(figsize=(8, 8))
-cols, rows = 3, 3
-for i in range(1, cols * rows + 1):
-    sample_idx = torch.randint(len(training_data), size=(1,)).item()
-    img, label = training_data[sample_idx]
-    figure.add_subplot(rows, cols, i)
-    plt.title(labels_map[label])
-    plt.axis("off")
-    plt.imshow(img.squeeze(), cmap="gray")
+# figure = plt.figure(figsize=(8, 8))
+# cols, rows = 3, 3
+# for i in range(1, cols * rows + 1):
+#     sample_idx = torch.randint(len(training_data), size=(1,)).item()
+#     img, label = training_data[sample_idx]
+#     figure.add_subplot(rows, cols, i)
+#     plt.title(labels_map[label])
+#     plt.axis("off")
+#     plt.imshow(img.squeeze(), cmap="gray")
+# plt.show()
+
+# 파일에서 사용자 정의 데이터셋 만들기
+# 사용자 정의 Dataset 클래스는 반드시 3개 함수를 구현해야 합니다: 
+# __init__, __len__, and __getitem__. 아래 구현을 살펴보면 
+# FashionMNIST 이미지들은 img_dir 디렉토리에 저장되고, 
+# 정답은 annotations_file csv 파일에 별도로 저장됩니다.
+
+# 다음 장에서 각 함수들에서 일어나는 일들을 자세히 살펴보겠습니다.
+
+from torch.utils.data import DataLoader
+
+train_dataloader = DataLoader(training_data, batch_size=64, shuffle=True)
+test_dataloader = DataLoader(test_data, batch_size=64, shuffle=True)
+
+# 이미지와 정답(label)을 표시합니다.
+train_features, train_labels = next(iter(train_dataloader))
+print(f"Feature batch shape: {train_features.size()}")
+print(f"Labels batch shape: {train_labels.size()}")
+img = train_features[0].squeeze()
+label = train_labels[0]
+plt.imshow(img, cmap="gray")
 plt.show()
+print(f"Label: {label}")
 
 # Dataset 을 DataLoader 의 인자로 전달합니다. 
 # 이는 데이터셋을 순회 가능한 객체(iterable)로 감싸고, 
