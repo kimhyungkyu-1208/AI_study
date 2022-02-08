@@ -46,7 +46,7 @@ hypothesis = x_train * W + b
 
 # 학습하려는 모델의 매개변수와 학습률(learning rate) 하이퍼파라매터를 등록하여 옵티마이저를 초기화
 cost = torch.mean((hypothesis - y_train) ** 2)
-optimizer = optim.SGD([W, b], lr=0.01)
+optimizer = optim.SGD([W, b], lr=0.1)
 
 # 최적화 단계의 각 반복(iteration)을 에폭이라고 부릅니다. 하나의 에폭은 다음 두 부분으로 구성됩니다.
 
@@ -57,8 +57,8 @@ optimizer = optim.SGD([W, b], lr=0.01)
 
 # epoch 를 100으로 반복 학습 합니다. 
 # 모델의 예측값과 그에 해당하는 정답(label)을 사용하여 오차(error, 손실(loss, cost) )를 계산합니다. 
-# Pytorch에서는 gradients값들을 추후에 backward를 해줄때 계속 더해주기 때문"
-# 에 우리는 항상 backpropagation을 하기전에 gradients를 zero로 만들어주고 시작을 해야합니다. 
+# Pytorch에서는 gradients값들을 추후에 backward를 해줄때 계속 더해주기 때문에 
+# 우리는 항상 backpropagation을 하기전에 gradients를 zero로 만들어주고 시작을 해야합니다. 
 # optimizer.zero_grad()를 호출하여 모델 매개변수의 변화도를 0으로 설정합니다. 
 # 기본적으로 변화도는 더해지기(add up) 때문에 중복 계산을 막기 위해 반복할 때마다 명시적으로 0으로 설정합니다. 
 # 한번의 학습이 완료되어지면(즉, Iteration이 한번 끝나면) gradients를 항상 0으로 만들어 주어야 합니다. 
